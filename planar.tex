@@ -13,7 +13,7 @@
 \end{enumerate}
 \end{examples}
 \begin{response}
-  First, a graph that cannot be planar (we will prove this later):
+  First, a graph that cannot be planar (we will prove this later): \\
   \begin{tikzpicture}
     \filldraw[fill=black, draw=black] (0, 0) circle [radius=0.1];
     \filldraw[fill=black, draw=black] (0, 1) circle [radius=0.1];
@@ -24,7 +24,7 @@
     \draw (1, 1) -- (0, 0) -- (1, 0) -- (0, 1) -- (1, 1) -- (0, 2) -- (1, 2) -- (0, 1);
     \draw (0, 0) -- (1, 2);
     \draw (0, 2) -- (1, 0);
-  \end{tikzpicture}
+  \end{tikzpicture} \\
   Now we begin the assigned examples:
   \begin{enumerate}
   \item
@@ -46,7 +46,7 @@
       \draw (0, 1) -- (1, 1) -- (1, 2) -- (0, 1) -- (1, 0) -- (1, 1);
     \end{tikzpicture}
   \item
-      A planar diagram of $K_{2, 2)$: \\
+      A planar diagram of $K_{2, 3}$: \\
         \begin{tikzpicture}
           \filldraw[fill=black, draw=black] (0, 0) circle [radius=0.1];
           \filldraw[fill=black, draw=black] (0, 1) circle [radius=0.1];
@@ -74,6 +74,15 @@
 \end{enumerate}
 (Do not use Theorem \ref{thm:euler}).
 \end{theorem}
+\begin{proof}
+\item Label the vertices of $K_{3,3}$ $m_1, m_2, m_3, n_1, n_2, n_3$ such that $m_i$ is adjacent to $n_j$ for any $i$ and $j$ and no other edges are present, as the definition of $K_{3,3}$ allows. Consider any arbitrary graph diagram $D$ of this graph. Define the \textit{trace} of a path $P$ of $G$ to be the curve that connects the arcs of $D$ that connect each given pair of vertices of the given path. We seek to prove that there exists a trace of some path $P$ that is not simple, for any arbitrary $D$. \\
+  Let $C$ be the closed curve traced by the path $(n_1, m_1, n_2, m_2, n_1)$. If this curve is not simple, then $D$ is not planar. If it is simple, consider the simple continuous arc $L$ that is the trace of the path $(n_1, m_3, n_2)$. By the Jordan Curve Theorem, with the exception of the endpoints of $L$ the entire curve lies in one of the two regions $\mathbb{R}^2 \setminus C$. Call the open region of $\R^2 \setminus C$ the \textit{outside} of $C$, and call the other region the \textit{inside} of $C$. We have that, WLOG, $L$ lies inside of $C$: if it is not, simply switch $m_3$ and $m_2$. Now consider $n_3$. There are two cases: $n_3$ lies inside of $C$, or $n_3$ lies outside of $C$. (This is because the arc traced by $(m_1, n_3, m_2$ has to be entirely outside or inside of $C$ by the Jordan Curve Theorem. \\
+  \textbf{Case 1: $n_3$ is inside of $C$.} \\
+  Call $C_2$ the simple closed curve that is the trace of $(m_1, n_1, m_3, n_2, m_1)$. The region $C \setminus C_2$ lies outside of $C_2$ and is distinct from it except along the arc $L$ by the Jordan Curve Theorem. $n_3$ must lie in either $C \setminus C_2$ or $C_2$ if it lies in $C$ by definition. Regardless of which set it lies in, it lies in a different set to either $m_1$, which only lies in $C_2$, or $m_3$, which only lies in $C \setminus C_2$. WLOG assume that $n_3$ is in $C_2$ and thus lies in a different region to $m_3$. Consider the trace of $(m_1, n_3, m_2, n_1)$. This arc connects two points on $C_2$, but it has points both inside and outside of $C_2$. Therefore, by the contrapositive of the Jordan Curve Theorem, either $C_2$ is not simple (in which case $D$ is not planar) or this arc intersects $C_2$ at some point outside of its endpoints (in which case $D$ is also not planar). Thus, if $n_3$ is inside $C$, $D$ is not planar. \\
+  \textbf{Case 2: $n_3$ is outside of $C$.} \\
+  If $n_3$ lies on the outside of $C$, then the trace of $(m_1, n_1, m_3, n_2, m_2)$ is a simple continuous arc that is not entirely contained in either region of $C$: $n_3$ is outside $C$, but $m_3$ is inside $C$. Thus, by the contrapositive of the Jordan Curve Theorem, either $C$ is not simple and closed (in which case $D$ is not planar) or this arc intersects $C$ at a point besides its endpoints, in which case $D$ is not planar. Thus, if $n_3$ is outside $C$, $D$ is not planar.\\
+  In all cases $D$ is not planar. This holds for any arbitrary $D$. Thus, the graph $K_{3, 3}$ is nonplanar.
+\end{proof}
 
 \begin{theorem} Any subgraph of a planar graph is planar.
 \end{theorem}
