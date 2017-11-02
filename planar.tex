@@ -129,13 +129,28 @@
 \begin{theorem}[Euler]\label{thm:euler} If $G$ is polygonal then $v-e+f = 2$.
 \end{theorem}
 \begin{proof}
-  We first seek to show that $v - e + f$ is invariant under every step of a process outlined below, and we will then use that process to show that $v - e + f = 2$ for any polyhedral graph $G$. \\
+  We first seek to show that $v - e + f$ is invariant under every step of a process outlined below, and we will then use that process to show that $v - e + f = 2$ for any polyhedral graph $G$. 
   Consider every face of $G$ to begin with. If any face has more than $3$ edges as its boundary, draw a diagonal between vertices on that boundary that are not already connected. This adds $1$ edge and adds $1$ face by the Jordan Curve Theorem, so $v - e + f$ does not change. Repeat this process until $G$ is composed solely of faces with $3$ edges. Consider the exterior of $G$. Because $G$ is polygonal, the boundary is a simple cycle, because otherwise $G$ would not be planar or composed of faces. Consider any edge $E$ of this exterior cycle. It is part of a single face $F$ with three edges, some of which may also be on the exterior. \\
   If $F$ has only one edge on the exterior boundary, then removing $E$ results in a new polygonal graph with the same sum $v - e + f$. The new graph will be polygonal because the other edges of $F$ must have been a part of other faces (otherwise, they would be on the exterior). Therefore, all we have done is remove one edge and one face, which preserves $v - e + f$. (Note also that this does not add any faces, so all faces still have $3$ edges.) \\
   If $F$ has two edges, there is a single edge connecting them behind the exterior boundary. Removing both of these edges at once will result in the loss of a face, an edge, and a vertex, so it will preserve $v - e + f$. The edge that connected the two exterior edges will now be a part of the exterior boundary, but it must have been a part of another face because otherwise it would have been on the exterior to being with. \\
   If $F$ has three edges on the boundary, then $G$ itself is simply a triangle, isomorphic to $K_3$. As $v$, $e$, $f$, are the same for any graph isomorphic to $K_3$, we know that $G$ in this case has $v - e + f = 2$. \\
   By continuing this process of removing edges, we can transform any polygonal graph $G$ to a triangle without modifying $v - e + f$. As the triangle has $v - e + f = 2$, this shows that for any polygonal graph $G$, $v - e + f = 2$.
   
+\end{proof}
+\begin{note}
+  I Googled this and found the craziest, most elegant proof I've come across, so I had to include it. Credit to http://www.ics.uci.edu/~eppstein/junkyard/euler/all.html for the proof idea and the corresponding image. They credit W.P.Thurston's ``The Geometry and Topology of Three-Dimensional Manifolds'', which is apparently an unpublished series of lecture notes (proof by obscurity, I guess).
+\end{note}
+\begin{proof}
+  \begin{figure}[p]
+    \caption{An example of an arbitrary polyhedral graph $G$ with charges attached.}
+    \centering
+    \includegraphics[width=1\textwidth]{eulercharacteristic}
+    \label{fig:charge_euler}
+  \end{figure}
+  Consider any polyhedral graph $G$. Arrange its vertices so that there is a unique top and bottom vertex, which we will call $v_T$ and $v_B$. \\
+  Now, assign a \textit{charge} to each vertex, face, and edge: give vertices and faces a positive charge, and give edges a negative charge (as depicted in Figure \ref{fig:charge_euler}). The total sum of charges across the graph is $v - e + f$ by construction, so we seek to show that this sum is in fact $2$. \\
+  To do this, collect each charge on a vertex or edge on a face in a counterclockwise manner, as depicted. Displace each charge on a vertex to the face on its right (of which the exterior is one possibility). Do not displace the charges on $v_T$ or $v_B$. Displace each edge charge to the face on the right of it as well: because $G$ is polygonal, this is unique. We seek to show the sum of the collected charges on every face is $0$. To do this, note that each face collects charge from every vertex and edge on the left side of its border. Thus, the charges it collects are an alternating sequence of vertices and edges, proceeding counterclockwise from the top. Note that, however, the first and last charges in this sequence are always edges: if a vertex goes to a face, the counterclockwise edge from that vertex will go the same face. Thus, the sum of the vertex and edge charges for any face will be $-1$, which when added to the one positive charge the face itself has produces $0$. \\
+  Thus, every charge cancels except the two on $v_T$ and $v_B$, which are both positive. Thus, the total charge is $2$. As the total charge is equivalent to $v - e + f$, this proves that for any polygonal graph $G$ $v - e + f = 2$.
 \end{proof}
 
 \begin{corollary} If $G$ is planar and connected, then $v-e+f = 2$.
