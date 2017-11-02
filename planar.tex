@@ -66,6 +66,9 @@
 
 \begin{exercise} Draw an example of the situation described in the Jordan Curve theorem which demonstrates that the conclusion of the Jordan Curve Theorem is not always obvious.
 \end{exercise}
+\begin{response}
+  Consider the \textbf{Koch snowflake}: a fractal created by starting with an equilateral triangle, constructing an outward-facing equilateral triangle from the middle third of every side, removing the side of that triangle that lies on the original line, and repeating indefinitely. Such a fractal challenges the intuition of the Jordan Curve Theorem because the inside region is infinitely jagged. There are Jordan curves with positive area, and in general continuity and simplicity is extremely weak and does not exclude extremely pathological curves.
+\end{response}
 
 \begin{theorem}\leavevmode
 \begin{enumerate}
@@ -116,21 +119,45 @@
 
 \begin{theorem} If $G$ is a planar graph with planar diagrams $D_1$ and $D_2$, then $f(D_1) = f(D_2)$.
 \end{theorem}
+\begin{proof}
+  Consider any graph diagram $D_1$ of $G$. By the Jordan Curve Theorem, every face is defined by a simple closed curve of $D_1$ such that no edge of $D_1$ lies inside the region defined by that simple closed curve. A simple closed curve of $D_1$ is a simple cycle of $G$. Note that, even if two vertices in a simple cycle can be joined by a different path, the end result is still $2$ faces: pick one cycle to be in the inside and one to be the outside, and you still have two regions. This number is independent of the diagram $D_1$, so for any two planar diagrams $D_1$ and $D_2$ we have $f(D_1) = f(D_2)$.
+\end{proof}
 
 \begin{definition} A graph diagram $D$ is \textbf{polygonal} if it is planar, connected, and has the propery that every edge of $D$ borders on two distinct faces.
 \end{definition}
 
 \begin{theorem}[Euler]\label{thm:euler} If $G$ is polygonal then $v-e+f = 2$.
 \end{theorem}
+\begin{proof}
+  We first seek to show that $v - e + f$ is invariant under every step of a process outlined below, and we will then use that process to show that $v - e + f = 2$ for any polyhedral graph $G$. \\
+  Consider every face of $G$ to begin with. If any face has more than $3$ edges as its boundary, draw a diagonal between vertices on that boundary that are not already connected. This adds $1$ edge and adds $1$ face by the Jordan Curve Theorem, so $v - e + f$ does not change. Repeat this process until $G$ is composed solely of faces with $3$ edges. Consider the exterior of $G$. Because $G$ is polygonal, the boundary is a simple cycle, because otherwise $G$ would not be planar or composed of faces. Consider any edge $E$ of this exterior cycle. It is part of a single face $F$ with three edges, some of which may also be on the exterior. \\
+  If $F$ has only one edge on the exterior boundary, then removing $E$ results in a new polygonal graph with the same sum $v - e + f$. The new graph will be polygonal because the other edges of $F$ must have been a part of other faces (otherwise, they would be on the exterior). Therefore, all we have done is remove one edge and one face, which preserves $v - e + f$. (Note also that this does not add any faces, so all faces still have $3$ edges.) \\
+  If $F$ has two edges, there is a single edge connecting them behind the exterior boundary. Removing both of these edges at once will result in the loss of a face, an edge, and a vertex, so it will preserve $v - e + f$. The edge that connected the two exterior edges will now be a part of the exterior boundary, but it must have been a part of another face because otherwise it would have been on the exterior to being with. \\
+  If $F$ has three edges on the boundary, then $G$ itself is simply a triangle, isomorphic to $K_3$. As $v$, $e$, $f$, are the same for any graph isomorphic to $K_3$, we know that $G$ in this case has $v - e + f = 2$. \\
+  By continuing this process of removing edges, we can transform any polygonal graph $G$ to a triangle without modifying $v - e + f$. As the triangle has $v - e + f = 2$, this shows that for any polygonal graph $G$, $v - e + f = 2$.
+  
+\end{proof}
 
 \begin{corollary} If $G$ is planar and connected, then $v-e+f = 2$.
 \end{corollary}
+\begin{proof}
+  Remove every edge that does not border two distinct faces. This does not modify $v - e + f$, because each time this is done $e$ and $f$ decrease by one.  By the above, for this new graph, $v - e + f = 2$. As $v - e + f$ is the same for the new graph and the original $G$, we have that for $G$ $v - e + f = 2$.
+\end{proof}
 
 \begin{corollary} $K_5$ and $K_{3,3}$ are nonplanar.
 \end{corollary}
+\begin{proof}
+  Assume the contrary for $K_5$: that is, that $K_5$ is planar. As $K_5$ is connected, by \ref{thm:euler} (specifically its corollary), $v - e + f = 2$. We have $v = 5$ and $e = \binom{5}{2} = 10$. Thus, we have that $5 - 10 + f = 2 \Rightarrow f = 7$. However, there are $\binom{5}{3} = 10$ choices of $3$ points, and because the graph is complete each of these must form a face. This is a contradiction. Thus, $K_5$ is not planar. \\
+  Assume the contrary now for $K_{3, 3}$: that it is planar. Because it is connected, by the corollary above of \ref{thm:euler}, $v - e + f = 2$. We have $v = 6$ and $e = 3 \times 3 = 9$, so we have $6 - 9 + f = 2 \Rightarrow f = 5$. Note that every face must have at least $4$ bordering edges, because if there were not $K_{3, 3}$ would not be bipartite. 
+\end{proof}
 
 \begin{theorem} If $G$ is planar then $G$ has a vertex of degree $\leq 5$
 \end{theorem}
+\begin{proof}
+  We will prove the contrapositive: that if $G$ has no vertex of degree $\le 5$, then $G$ is not planar. \\
+  If $G$ has a vertex with degree $6$ or more, it must have at least $7$ vertices. Take any $5$ vertices of this graph. Each one has degree $5$ or more, and so the entire graph is an edge extension of $K_5$ at those vertices. Therefore, $G$ is not planar. \\
+  As we have proven the contrapositive, the original theorem is shown: if $G$ is planar, then $G$ has a vertex of degree $\le 5$.
+\end{proof}
 
 \begin{definition} Let $d\in \mathbb{N}$.  A graph is \textbf{regular of degree} $d$ if all its vertices have degree $d$.
 \end{definition}
@@ -152,12 +179,33 @@
 
 \begin{lemma} If $G$ is regular of degree $d$ then $e=\frac{dv}{2}$.
 \end{lemma}
+\begin{proof}
+  There are $v$ vertices, and each vertex has $d$ edges. Each edge is adjacent to $2$ vertices, so there are $dv$ edge-vertex combos and therefore $\frac{dv}{2}$ edges.
+\end{proof}
 
 \begin{lemma} If $G$ is platonic of degree $d$, and $n$ is the number of edges bounding each face, then $f = dv/n$.
 \end{lemma}
+\begin{proof}
+  There are $\frac{dv}{2}$ edges, and it takes $n$ edges to bound a face. But every edge bounds $2$ faces, so the end result is $f = 2 \times \frac{dv}{2} \times n = \frac{dv}{n}$.
+\end{proof}
 
 \begin{theorem}[Euclid] Apart from $K_1$ and the cyclic graphs, there are 5 platonic graphs.
 \end{theorem}
+\begin{proof}
+  Using the lemmas above, and the knowledge that all platonic graphs have $v - e + f = 2$, we can write:
+  $$v - \frac{dv}{2} + \frac{dv}{n} = 2$$
+  where $d$ is the degree of every vertex and $n$ is the number of edges in a face. We can further simplify and manipulate this equality:
+  \begin{align*}
+    v - \frac{dv}{2} + \frac{dv}{n} &= 2 \\
+    2nv - ndv + 2dv &= 4n \\
+    v(nd - 2n - 2d) &= -4n \\
+    v\left( (n-2)(d-2) - 4\right) &= -4n \\
+    v(n-2)(d-2) &= 4v -4n \\
+    4n &= v(4 - (n-2)(d-2)) \\
+  \end{align*}
+  This equation must hold if a graph is to be platonic. We can therefore enumerate every solution of this and check it for existence, and thus find the number of platonic graphs. \\
+  Each variable must be an integer, and we have additional bounds on each one: we have $v \ge 2$, $n \ge 3$ (a face cannot have fewer than $3$ edges), and $d \ge 3$ (the graph must not be cyclic). We will simply categorize each solution $(n, d, v)$ by $n$. If $n = 3$, then we have the equation $12 = v(6 - d)$. With $d \ge 3$, we have the three solutions $(3, 3, 4), (3, 4, 6)$, and $3, 5, 12)$. These correspond to the tetrahedron, octahedron, and icosahedron respectively. If $n = 4$, we have the equation $16 = v(8 - 2d)$, whose only solution is $(4, 3, 8)$: the cube. If $n = 5$, we have $20 = v(10 - 3d)$ whose only solution is $(5, 3, 20)$: the dodecahedron. If $n = 6$, then we get the equation $24 = v(12 - 4d)$, which has no solutions for $d \ge 3$. This holds for all $n > 5$, so we are left with five platonic graphs.
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latex
